@@ -7,6 +7,8 @@ public class Player : MonoBehaviour {
 	Rigidbody rb;
 	public GameObject gameManager;
 	private GameManager gameManagerComponent;
+	private Interactions interactionManager;
+	public bool canWalk = true;
 
 	public float Acceptance = 0.0f;
 
@@ -14,6 +16,7 @@ public class Player : MonoBehaviour {
 	{
 		rb = GetComponent<Rigidbody> ();
 		gameManagerComponent = gameManager.GetComponent<GameManager> ();
+		interactionManager = GetComponent<Interactions> ();
 	}
 	// Update is called once per frame
 	void Update () 
@@ -27,6 +30,9 @@ public class Player : MonoBehaviour {
 			if(dist.sqrMagnitude < 3.0)	//If we are closer than sqrt(3) away, we can initiate an interaction
 			{
 				//Debug.Log (GetClosestNPC().name);	//Print out the name of the object
+				interactionManager.InitInteraction();
+				canWalk = false;
+				rb.velocity = Vector3.zero;
 			}
 		}
 
@@ -34,12 +40,14 @@ public class Player : MonoBehaviour {
 
 	void Movement()
 	{
-		float moveX = Input.GetAxis("Horizontal") * movementSpeed * Time.deltaTime;	//Set x movement value.
-		float moveY = Input.GetAxis("Vertical") * movementSpeed * Time.deltaTime;	//Set y movement value.
+		if(canWalk)
+		{
+			float moveX = Input.GetAxis("Horizontal") * movementSpeed * Time.deltaTime;	//Set x movement value.
+			float moveY = Input.GetAxis("Vertical") * movementSpeed * Time.deltaTime;	//Set y movement value.
 
-		Vector2 velocity = new Vector2 (moveX, moveY);	//Create a 2D velocity vector from movement data.	
-		rb.velocity = new Vector3(velocity.x,velocity.y,0) * movementSpeed;	//Set velocity to a new 3D vector using 2D velocity data.
-
+			Vector2 velocity = new Vector2 (moveX, moveY);	//Create a 2D velocity vector from movement data.	
+			rb.velocity = new Vector3(velocity.x,velocity.y,0) * movementSpeed;	//Set velocity to a new 3D vector using 2D velocity data.
+		}
 	}
 
 	GameObject GetClosestNPC()	//Returns closest NPC from player.
