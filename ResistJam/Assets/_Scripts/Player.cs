@@ -9,7 +9,7 @@ public class Player : MonoBehaviour {
 	private GameManager gameManagerComponent;
 	private Interactions interactionManager;
 	public bool canWalk = true;
-
+	public float interactionThreshold = 4.5f;
 	public float Acceptance = 0.0f;
 
 	void Start()
@@ -28,7 +28,7 @@ public class Player : MonoBehaviour {
 			GameObject npc = GetClosestNPC ();
 			Vector3 dist = npc.transform.position - transform.position;
 
-			if(dist.sqrMagnitude < 3.0)	//If we are closer than sqrt(3) away, we can initiate an interaction
+			if(dist.sqrMagnitude < interactionThreshold)	//If we are closer than sqrt(3) away, we can initiate an interaction
 			{
 				interactionManager.InitInteraction(npc);
 				canWalk = false;
