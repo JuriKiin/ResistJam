@@ -1,9 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+
+public enum MissionType {
+	Share, Fetch, Talk, Help, None
+}
+
+
 public class Missions : MonoBehaviour {
 
-	enum MissionType {Share, Fetch, Talk, Help, None};
 	MissionType currentMission;
 	bool missionComplete = true;
 

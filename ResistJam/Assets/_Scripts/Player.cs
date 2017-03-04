@@ -25,12 +25,12 @@ public class Player : MonoBehaviour {
 
 		if(Input.GetKeyUp(KeyCode.Space))	//try to interact with someone
 		{
-			Vector3 dist = GetClosestNPC ().transform.position - transform.position;
+			GameObject npc = GetClosestNPC ();
+			Vector3 dist = npc.transform.position - transform.position;
 
 			if(dist.sqrMagnitude < 3.0)	//If we are closer than sqrt(3) away, we can initiate an interaction
 			{
-				//Debug.Log (GetClosestNPC().name);	//Print out the name of the object
-				interactionManager.InitInteraction();
+				interactionManager.InitInteraction(npc);
 				canWalk = false;
 				rb.velocity = Vector3.zero;
 			}
