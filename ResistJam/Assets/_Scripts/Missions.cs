@@ -1,16 +1,23 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 
 public enum MissionType {
-	Share, Fetch, Talk, Help, None
+	Share, Fetch, Help, None	//Talk is handled outside of a mission. It is purley within interaction.cs
 }
 
 
 public class Missions : MonoBehaviour {
 
-	MissionType currentMission;
+	public MissionType currentMission;
 	bool missionComplete = true;
+	public Text missionText;
+
+	//Fetch
+	public GameObject fetchItem;
+	public bool haveItem = false;
+	NPC currentNPC;
 
 	void Start () 
 	{
@@ -19,10 +26,7 @@ public class Missions : MonoBehaviour {
 
 	void Update () 
 	{
-		if(missionComplete)	//Once we are done with a mission, set our missio type to None.
-		{
-			currentMission = MissionType.None;
-		}
+
 		switch(currentMission)	//What to do if a certain mission is active
 		{
 		case MissionType.None:
@@ -33,9 +37,12 @@ public class Missions : MonoBehaviour {
 			break;
 
 		case MissionType.Fetch:
-			break;
 
-		case MissionType.Talk:
+			if(haveItem)
+			{
+				currentNPC.hasCompleted = true;
+			}
+
 			break;
 
 		case MissionType.Help:
@@ -43,6 +50,20 @@ public class Missions : MonoBehaviour {
 
 		default:	//Set default mission type to none.
 			currentMission = MissionType.None;
+			break;
+		}
+	}
+
+	public void SetMissionDetails(NPC data)
+	{
+		currentNPC = data;
+
+		switch(data.mission)
+		{
+		case MissionType.Fetch:
+			currentMission = MissionType.Fetch;	//Set the current mission type
+			fetchItem = data.fetchItem;
+			missionText.text = data.missionText;
 			break;
 		}
 	}

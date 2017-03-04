@@ -78,4 +78,14 @@ public class Player : MonoBehaviour {
 			return;
 		}
 	}
+
+	void OnTriggerEnter(Collider other)
+	{
+		if(other.gameObject.tag == "Item")
+		{
+			Debug.Log ("Working");
+			Destroy (gameManager.GetComponent<Missions>().fetchItem);	//Add to inventory instead?
+			gameManager.GetComponent<Missions> ().haveItem = true;
+		}
+	}
 }
