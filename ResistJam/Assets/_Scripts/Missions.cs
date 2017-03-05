@@ -2,7 +2,6 @@
 using System.Collections;
 using UnityEngine.UI;
 
-
 public enum MissionType {
 	Share, Fetch, Help, None	//Talk is handled outside of a mission. It is purley within interaction.cs
 }
