@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Player : MonoBehaviour {
-
+public class Player : MonoBehaviour
+{
 	public float movementSpeed = 2.0f;
 	Rigidbody rb;
 	public GameObject gameManager;

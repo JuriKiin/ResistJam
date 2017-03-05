@@ -2,8 +2,8 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class Interactions : MonoBehaviour {
-
+public class Interactions : MonoBehaviour
+{
 	GameObject interactionWindow;
 	public bool activeInteraction = false;
 
@@ -16,7 +16,8 @@ public class Interactions : MonoBehaviour {
 	GameObject currentNPC;
 
 	// Use this for initialization
-	void Start () {
+	void Start ()
+    {
 		interactionWindow = GameObject.FindGameObjectWithTag ("InteractionWindow");
 		interactionWindow.SetActive (false);
 		player = GetComponent<Player> ();
