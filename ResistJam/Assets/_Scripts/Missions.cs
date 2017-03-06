@@ -2,23 +2,27 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public enum MissionType {
-	Share, Fetch, Help, None	//Talk is handled outside of a mission. It is purley within interaction.cs
+public enum MissionType
+{
+	Talk, Fetch, GroceriesHelp, None	//Talk is handled outside of a mission. It is purley within interaction.cs
 }
 
 
-public class Missions : MonoBehaviour {
-
+public class Missions : MonoBehaviour
+{
 	public MissionType currentMission;
 	bool missionComplete = true;
 	public Text missionText;
 
 	//Fetch
-	public GameObject fetchItem;
+	public GameObject missionItem;
 	public bool haveItem = false;
-	NPC currentNPC;
+	public NPC currentNPC;
 
-	void Start () 
+    // Secondary NPC for mission
+    public NPC secondaryCurrentNPC;
+
+    void Start () 
 	{
 		currentMission = MissionType.None;	//Set the default mission to none.
 	}
@@ -32,7 +36,7 @@ public class Missions : MonoBehaviour {
 			//Do nothing
 			break;
 
-		case MissionType.Share:
+		case MissionType.Talk:
 			break;
 
 		case MissionType.Fetch:
@@ -44,8 +48,21 @@ public class Missions : MonoBehaviour {
 
 			break;
 
-		case MissionType.Help:
-			break;
+		case MissionType.GroceriesHelp:
+                // First part you must pick up the item to help
+                if(haveItem)
+                {
+                    currentNPC.missionInProgress = true;
+                    secondaryCurrentNPC.missionInProgress = true;
+                }
+
+                // Second Part is interacting with the car
+                if(secondaryCurrentNPC.hasCompleted = true)
+                {
+                    currentNPC.hasCompleted = true;
+                }
+
+                break;
 
 		default:	//Set default mission type to none.
 			currentMission = MissionType.None;
@@ -59,11 +76,17 @@ public class Missions : MonoBehaviour {
 
 		switch(data.mission)
 		{
-		case MissionType.Fetch:
-			currentMission = MissionType.Fetch;	//Set the current mission type
-			fetchItem = data.fetchItem;
-			missionText.text = data.missionText;
-			break;
-		}
+		    case MissionType.Fetch:
+			    currentMission = MissionType.Fetch;	//Set the current mission type
+			    missionItem = data.missionItem;
+			    missionText.text = data.missionText;
+			    break;
+
+            case MissionType.GroceriesHelp:
+                currentMission = MissionType.GroceriesHelp; //Set the current mission type
+                missionItem = data.missionItem;
+                missionText.text = data.missionText;
+                break;
+        }
 	}
 }

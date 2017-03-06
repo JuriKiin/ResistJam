@@ -81,11 +81,13 @@ public class Player : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other)
 	{
-		if(other.gameObject.tag == "Item")
-		{
-			Debug.Log ("Working");
-			Destroy (gameManager.GetComponent<Missions>().fetchItem);	//Add to inventory instead?
-			gameManager.GetComponent<Missions> ().haveItem = true;
-		}
+        if (gameManager.GetComponent<Missions>().currentNPC != null)
+        {
+            if (other.gameObject.tag == "Item" && gameManager.GetComponent<Missions>().currentNPC.missionInProgress)
+            {
+                Destroy(gameManager.GetComponent<Missions>().missionItem);    //Add to inventory instead?
+                gameManager.GetComponent<Missions>().haveItem = true;
+            }
+        }
 	}
 }

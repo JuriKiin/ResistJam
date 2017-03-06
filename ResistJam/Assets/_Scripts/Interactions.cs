@@ -2,8 +2,8 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class Interactions : MonoBehaviour {
-
+public class Interactions : MonoBehaviour
+{
 	GameObject interactionWindow;
 	public bool activeInteraction = false;
 
@@ -103,7 +103,8 @@ public class Interactions : MonoBehaviour {
 		switch(responseValue)	//Decide how to add acceptance for only talking.
 		{
 		case 0:
-			Manager.GetComponent<Missions>().SetMissionDetails(npcData);	//Set mission details.
+			Manager.GetComponent<Missions>().SetMissionDetails(npcData);    //Set mission details.
+            npcData.missionInProgress = true;
 			break;	
 		case 1:
 			player.Acceptance += npcData.acceptanceValue;
