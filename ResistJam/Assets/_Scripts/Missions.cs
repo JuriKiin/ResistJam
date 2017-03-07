@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public enum MissionType
 {
-	Talk, Fetch, GroceriesHelp, None	//Talk is handled outside of a mission. It is purley within interaction.cs
+	Talk, Fetch, Help, None	//Talk is handled outside of a mission. It is purley within interaction.cs
 }
 
 
@@ -44,24 +44,25 @@ public class Missions : MonoBehaviour
 			if(haveItem)
 			{
 				currentNPC.hasCompleted = true;
-			}
+                ResetMissionDetails();
+            }
 
 			break;
 
-		case MissionType.GroceriesHelp:
+		case MissionType.Help:
                 // First part you must pick up the item to help
                 if(haveItem)
                 {
-                    currentNPC.missionInProgress = true;
-                    secondaryCurrentNPC.missionInProgress = true;
+                    secondaryCurrentNPC.interactVar = true;
                 }
 
-                // Second Part is interacting with the car
-                if(secondaryCurrentNPC.hasCompleted = true)
+                // After interacting with the second NPC
+                if(secondaryCurrentNPC.hasCompleted)
                 {
                     currentNPC.hasCompleted = true;
+                    secondaryCurrentNPC.interactVar = false;
+                    ResetMissionDetails();
                 }
-
                 break;
 
 		default:	//Set default mission type to none.
@@ -70,23 +71,46 @@ public class Missions : MonoBehaviour
 		}
 	}
 
+
+    public void ResetMissionDetails()
+    {
+        currentMission = MissionType.None;
+        missionText.text = "Current Mission: None";
+        missionItem = null;
+        haveItem = false;
+    }
+
 	public void SetMissionDetails(NPC data)
 	{
 		currentNPC = data;
 
 		switch(data.mission)
 		{
-		    case MissionType.Fetch:
-			    currentMission = MissionType.Fetch;	//Set the current mission type
+
+            // Use this to clear previous mission variables
+            case MissionType.None:
+                break;
+
+            case MissionType.Fetch:
+                // Set some variables to false to prevent issues
+                haveItem = false;
+
+                currentMission = MissionType.Fetch;	//Set the current mission type
 			    missionItem = data.missionItem;
 			    missionText.text = data.missionText;
 			    break;
 
-            case MissionType.GroceriesHelp:
-                currentMission = MissionType.GroceriesHelp; //Set the current mission type
+            case MissionType.Help:
+                // Set some variables to false to prevent issues
+                haveItem = false;
+
+                currentMission = MissionType.Help; //Set the current mission type
                 missionItem = data.missionItem;
                 missionText.text = data.missionText;
+                secondaryCurrentNPC = data.secondaryNPC;
                 break;
+
+
         }
 	}
 }

@@ -26,14 +26,17 @@ public class Player : MonoBehaviour {
 		if(Input.GetKeyUp(KeyCode.Space))	//try to interact with someone
 		{
 			GameObject npc = GetClosestNPC ();
-			Vector3 dist = npc.transform.position - transform.position;
 
-			if(dist.sqrMagnitude < interactionThreshold)	//If we are closer than sqrt(3) away, we can initiate an interaction
-			{
-				interactionManager.InitInteraction(npc);
-				canWalk = false;
-				rb.velocity = Vector3.zero;
-			}
+
+            Vector3 dist = npc.transform.position - transform.position;
+
+            if (dist.sqrMagnitude < interactionThreshold)   //If we are closer than sqrt(3) away, we can initiate an interaction
+            {
+                interactionManager.InitInteraction(npc);
+                canWalk = false;
+                rb.velocity = Vector3.zero;
+            }
+            
 		}
 
 	}
@@ -60,8 +63,12 @@ public class Player : MonoBehaviour {
 			Vector3 dist = npc.transform.position - transform.position;	//Calculate the vector between us and the npc.
 			if(dist.sqrMagnitude < distance)	//Square the magnitude of that vector, and if it's less than distance
 			{
-				distance = dist.sqrMagnitude;	//Set the new closest distance to the current distance
-				closestNPC = npc;				//Set the closest NPC to this game object that we are testing.
+				distance = dist.sqrMagnitude;   //Set the new closest distance to the current distance
+
+                if (npc.GetComponent<NPC>().interactVar)//Check to see if the NPC is allowed to have an interaction
+                {
+                    closestNPC = npc;               //Set the closest NPC to this game object that we are testing.
+                }
 			}
 		}
 		return closestNPC;	//Return this gameObject
@@ -83,8 +90,8 @@ public class Player : MonoBehaviour {
 	{
         if (gameManager.GetComponent<Missions>().currentNPC != null)
         {
-            if (other.gameObject.tag == "Item" && gameManager.GetComponent<Missions>().currentNPC.missionInProgress)
-            {
+            if (gameManager.GetComponent<Missions>().currentNPC.missionItem == other.gameObject && gameManager.GetComponent<Missions>().currentNPC.missionInProgress)
+            { 
                 Destroy(gameManager.GetComponent<Missions>().missionItem);    //Add to inventory instead?
                 gameManager.GetComponent<Missions>().haveItem = true;
             }

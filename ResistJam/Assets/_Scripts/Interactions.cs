@@ -102,19 +102,39 @@ public class Interactions : MonoBehaviour
 
 		switch(responseValue)	//Decide how to add acceptance for only talking.
 		{
-		case 0:
-			Manager.GetComponent<Missions>().SetMissionDetails(npcData);    //Set mission details.
-            npcData.missionInProgress = true;
-			break;	
-		case 1:
-			player.Acceptance += npcData.acceptanceValue;
-			break;
-		case 2:
-			player.Acceptance -= npcData.acceptanceValue;
-			break;
-		case 4: 	//USE 4 if we don't want them to hav a quest. This is used only for detail text interaction.
-			break;
-		default:
+            // Case 0 is a Blank interaction
+            case 0:
+                break;
+            
+            // Case 1 is a good response, gains acceptance
+		    case 1:
+			    player.Acceptance += npcData.acceptanceValue;
+			    break;
+
+            // Case 2 is a bad response, lose acceptance
+		    case 2:
+			    player.Acceptance -= npcData.acceptanceValue;
+			    break;
+
+            // Case 3 accepts a mission, sets missioninprogress to true, and sets the mission
+		    case 3:
+                Manager.GetComponent<Missions>().SetMissionDetails(npcData);    //Set mission details.
+                npcData.missionInProgress = true;
+                break;
+
+            // Case 4 Completes an npc's mission
+            case 4:
+                npcData.hasCompleted = true;
+                break;
+                
+            // Case 5 Activates a secondary NPC
+            case 5:
+                npcData.secondaryNPC.interactVar = true;
+                break;
+
+
+
+            default:
 			break;
 		}
 	}

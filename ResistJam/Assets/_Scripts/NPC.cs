@@ -22,6 +22,8 @@ public class NPC : MonoBehaviour
 	public string endOption;
     public bool missionInProgress = false;
     public bool hasCompleted = false;
+    public bool interactVar;
+    public NPC secondaryNPC;
 
     // Task Variables
     public string taskText;
