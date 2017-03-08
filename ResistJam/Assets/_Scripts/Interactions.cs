@@ -16,7 +16,8 @@ public class Interactions : MonoBehaviour
 	GameObject currentNPC;
 
 	// Use this for initialization
-	void Start () {
+	void Start ()
+    {
 		interactionWindow = GameObject.FindGameObjectWithTag ("InteractionWindow");
 		interactionWindow.SetActive (false);
 		player = GetComponent<Player> ();
@@ -57,28 +58,39 @@ public class Interactions : MonoBehaviour
 			nameText.text = npcData.characterName + ":";
 			greetingText.text = npcData.greeting;
 
-			if(npcData.hasCompleted)
+
+            // If mission is completed
+			if(npcData.missionInProgress)
 			{
-				player.Acceptance += npcData.acceptanceValue;
-				/*
-				for(int i=0;i<3;i++)
-				{
-					for(int j=0;j<3;j++)
-					{
-						if(j==npcData.responseValue[i])
-						{
-							options [i].interactable = false;	
-						}
-					}
-				}
-				*/
+
+                
+                // Check for quest dialogue options and change it to Mission in progress dialogue option
+                
+                    /*
+                for (int i = 0; i < 3; i++)
+                {
+                    if (options[i].GetComponentInChildren<ResponseValue>() == 3)
+                    {
+                        options[i].GetComponentInChildren<Text>().text = npcData.missionInProgressPlayerText;
+                        npcData.missionInProgressPlayerText = 
+
+                    }
+                }
+                */
+                
+                /* This code disables all text options
+                // Change it so you cannot choose any text options
 				for(int i=0;i<3;i++)
 				{
 					options [i].GetComponentInChildren<Text> ().text = "";
 					options [i].interactable = false;
 				}
-				return;
+
+                */
+                return;
 			}
+
+            // Normal Text Dialogue
 			for(int i=0;i<3;i++)
 			{
 				options [i].GetComponentInChildren<Text>().text = npcData.dialogueOptions [i];
@@ -91,7 +103,9 @@ public class Interactions : MonoBehaviour
 	{
 		
 		NPC npcData = currentNPC.GetComponent<NPC> ();		//Get the NPC component from the npc we're engaged with
+
 		greetingText.text = npcData.followUpOptons [option];	//Set the greeting text to the followup
+
 		for(int i=0;i<3;i++)
 		{
 			options [i].GetComponentInChildren<Text> ().text = "";	//Set button text to empty
@@ -100,6 +114,10 @@ public class Interactions : MonoBehaviour
 
 		int responseValue = npcData.responseValue [option];
 
+
+
+
+        // Response to how the player choses text dialogue
 		switch(responseValue)	//Decide how to add acceptance for only talking.
 		{
             // Case 0 is a Blank interaction

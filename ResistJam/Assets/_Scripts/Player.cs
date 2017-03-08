@@ -78,7 +78,7 @@ public class Player : MonoBehaviour {
 	{
 		if(Acceptance >= 100.0)	//If we are at 100% we win
 		{
-			//game is over
+			// game is over
 		}
 		else   //We continue playing
 		{
