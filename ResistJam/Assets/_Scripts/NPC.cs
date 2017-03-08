@@ -7,7 +7,7 @@ public class NPC : MonoBehaviour
 	public string characterName = "";
 	public string greeting = "";
 	public string[] dialogueOptions;
-	public string[] followUpOptons;
+	public string[] followUpOptions;
 	public float acceptanceValue = 2.0f;	//%
 	public float movementSpeed = 12.0f;
 	public int[] responseValue;
@@ -18,17 +18,28 @@ public class NPC : MonoBehaviour
     // Mission Variables
     public MissionType mission;
     public string missionText;	//Leave blank if no quest (Aside from talking)
+
+	// Text that replaces the mission start text:
     public string missionInProgressPlayerText;
+
+	// Text that replaces the NPC's text in middle of the mission
     public string missionInProgressNPCText;
+
+	// Mission Booleans
+	public bool missionInProgress = false;
+	public bool hasCompleted = false;
+	public bool missionComplete = false;
+
+	// Text that replaces the NPC's text when completing the mission
     public string missionCompletedText;
     public string endText;
-	public string endOption;
-    public bool missionInProgress = false;
-    public bool hasCompleted = false;
-    public bool missionComplete = false;
+
+
     public bool interactVar;
     public NPC secondaryNPC;
     GameObject player;
+
+
 
     // Task Variables
     public string taskText;
@@ -42,16 +53,10 @@ public class NPC : MonoBehaviour
 
     void Update()
 	{
-        // Bool for teext if you are in progress
-        if (missionInProgress == true)
-        {
-            greeting = missionInProgressNPCText;
-        }
-
         // Bool for Returning to NPC
-        if (hasCompleted)
+		if (missionComplete)
         {
-            greeting = missionInProgressNPCText;
+            greeting = missionCompletedText;
         }
 
 
@@ -61,7 +66,7 @@ public class NPC : MonoBehaviour
             // Increase acceptance
             player.GetComponent<Player>().Acceptance += acceptanceValue;
             missionInProgress = false;
-            greeting = endText;
+			greeting = endText;
 		}
 
 

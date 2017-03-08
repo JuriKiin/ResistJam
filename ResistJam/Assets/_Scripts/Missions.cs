@@ -44,25 +44,33 @@ public class Missions : MonoBehaviour
 			if(haveItem)
 			{
 				currentNPC.hasCompleted = true;
-                ResetMissionDetails();
             }
+			if (currentNPC.missionComplete)
+			{
+				ResetMissionDetails();
+			}
 
 			break;
 
 		case MissionType.Help:
                 // First part you must pick up the item to help
-                if(haveItem)
-                {
-                    secondaryCurrentNPC.interactVar = true;
-                }
+			if (haveItem) 
+			{
+				secondaryCurrentNPC.interactVar = true;
+			}
 
                 // After interacting with the second NPC
-                if(secondaryCurrentNPC.hasCompleted)
-                {
-                    currentNPC.hasCompleted = true;
-                    secondaryCurrentNPC.interactVar = false;
-                    ResetMissionDetails();
-                }
+			if (secondaryCurrentNPC.hasCompleted) 
+			{
+				currentNPC.hasCompleted = true;
+				secondaryCurrentNPC.interactVar = false;
+			}
+
+			if (currentNPC.missionComplete)
+			{
+				ResetMissionDetails();
+			}
+
                 break;
 
 		default:	//Set default mission type to none.
@@ -104,13 +112,12 @@ public class Missions : MonoBehaviour
                 // Set some variables to false to prevent issues
                 haveItem = false;
 
+
                 currentMission = MissionType.Help; //Set the current mission type
                 missionItem = data.missionItem;
                 missionText.text = data.missionText;
                 secondaryCurrentNPC = data.secondaryNPC;
                 break;
-
-
         }
 	}
 }

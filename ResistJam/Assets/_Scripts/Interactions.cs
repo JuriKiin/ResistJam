@@ -59,24 +59,35 @@ public class Interactions : MonoBehaviour
 			greetingText.text = npcData.greeting;
 
 
-            // If mission is completed
-			if(npcData.missionInProgress)
+            // If mission is completed or in-progress change the dialogue
+			if(npcData.missionInProgress || npcData.missionComplete)
 			{
 
                 
                 // Check for quest dialogue options and change it to Mission in progress dialogue option
-                
-                    /*
                 for (int i = 0; i < 3; i++)
                 {
-                    if (options[i].GetComponentInChildren<ResponseValue>() == 3)
-                    {
-                        options[i].GetComponentInChildren<Text>().text = npcData.missionInProgressPlayerText;
-                        npcData.missionInProgressPlayerText = 
+					if (npcData.responseValue [i] == 3 || npcData.responseValue[i] == 6) 
+					{
+						options [i].GetComponentInChildren<Text> ().text = npcData.missionInProgressPlayerText;
+						npcData.responseValue [i] = 6; // Sets it to a "Complete Quest Response value
+						if (npcData.missionInProgress)
+						{
+							npcData.followUpOptions [i] = npcData.missionInProgressNPCText;
+						}
+						if (npcData.hasCompleted)
+						{
+							npcData.followUpOptions [i] = npcData.missionCompletedText;
+						}
+					}
 
-                    }
+					// Normal Dialogue Option Set up
+					else
+					{
+						options [i].GetComponentInChildren<Text>().text = npcData.dialogueOptions [i];
+					}
                 }
-                */
+                
                 
                 /* This code disables all text options
                 // Change it so you cannot choose any text options
@@ -104,7 +115,7 @@ public class Interactions : MonoBehaviour
 		
 		NPC npcData = currentNPC.GetComponent<NPC> ();		//Get the NPC component from the npc we're engaged with
 
-		greetingText.text = npcData.followUpOptons [option];	//Set the greeting text to the followup
+		greetingText.text = npcData.followUpOptions [option];	//Set the greeting text to the followup
 
 		for(int i=0;i<3;i++)
 		{
@@ -140,7 +151,9 @@ public class Interactions : MonoBehaviour
                 npcData.missionInProgress = true;
                 break;
 
-            // Case 4 Completes an npc's mission
+            // Case 4 You have completed the NPC's task
+			//	      This is the variable you set true when you have
+			//        Completed what has been asked of you
             case 4:
                 npcData.hasCompleted = true;
                 break;
@@ -149,6 +162,21 @@ public class Interactions : MonoBehaviour
             case 5:
                 npcData.secondaryNPC.interactVar = true;
                 break;
+
+			// Case 6 (NEVER USE THIS, IT AUTOMATICALLY IS USED WEHN ACCEPTING A QUEST)
+			//		  Used for returning to an NPC to determine whether you have
+			//		  Completed their mission or not. If you have the misison becomes completed
+			//        If not the quest giver will tell you that you still need to complete your mission.
+			case 6:
+			if(npcData.hasCompleted)
+				{
+					npcData.missionComplete = true;
+				}
+				else
+				{
+					// Quest is not complete do nothing
+				}
+			break;
 
 
 
