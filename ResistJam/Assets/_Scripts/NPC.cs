@@ -65,6 +65,7 @@ public class NPC : MonoBehaviour
 		{
             // Increase acceptance
             player.GetComponent<Player>().Acceptance += acceptanceValue;
+			acceptanceValue = 0;
             missionInProgress = false;
 			greeting = endText;
 		}
