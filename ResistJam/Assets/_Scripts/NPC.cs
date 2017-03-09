@@ -9,8 +9,8 @@ public class NPC : MonoBehaviour
 	public string[] dialogueOptions;
 	public string[] followUpOptions;
 	public float acceptanceValue = 2.0f;	//%
-	public float movementSpeed = 12.0f;
 	public int[] responseValue;
+	public int minAcceptance;
 
     // Fetch Mission Variables
 	public GameObject missionItem;

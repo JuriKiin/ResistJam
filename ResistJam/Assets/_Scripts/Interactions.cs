@@ -57,20 +57,10 @@ public class Interactions : MonoBehaviour
 			//Set data
 			nameText.text = npcData.characterName + ":";
 			greetingText.text = npcData.greeting;
+		
 
-			if(player.inMission)
-			{
-				for (int i = 0; i < 3; i++)
-				{
-					if (npcData.responseValue [i] == 3) 
-					{
-						//Debug.Log ("PATRICK IS HERE");
-						npcData.followUpOptions [i] = "Sorry, you are currently helping somone else.";
-					}
-				}
-			}
             // If mission is completed or in-progress change the dialogue
-			else if(npcData.missionInProgress || npcData.missionComplete)
+			if(npcData.missionInProgress || npcData.missionComplete)
 			{
 
                 
@@ -97,25 +87,38 @@ public class Interactions : MonoBehaviour
 						options [i].GetComponentInChildren<Text>().text = npcData.dialogueOptions [i];
 					}
                 }
-                
-                
-                /* This code disables all text options
-                // Change it so you cannot choose any text options
-				for(int i=0;i<3;i++)
-				{
-					options [i].GetComponentInChildren<Text> ().text = "";
-					options [i].interactable = false;
-				}
-
-                */
                 return;
+			}
+			else if(player.inMission)
+			{
+				for (int i = 0; i < 3; i++)
+				{
+					if (npcData.responseValue [i] == 3) 
+					{
+						//Debug.Log ("PATRICK IS HERE");
+						npcData.followUpOptions [i] = "Sorry, you are currently helping somone else.";
+					}
+				}
 			}
 
             // Normal Text Dialogue
-			for(int i=0;i<3;i++)
+			if(player.Acceptance < npcData.minAcceptance)
 			{
-				options [i].GetComponentInChildren<Text>().text = npcData.dialogueOptions [i];
+				greetingText.text = "You are not accepted enough to talk to this person.";
+				for(int i=0;i<3;i++)
+				{
+					options [i].GetComponentInChildren<Text>().text = "";
+					options [i].interactable = false;
+				}
 			}
+			else
+			{
+				for(int i=0;i<3;i++)
+				{
+					options [i].GetComponentInChildren<Text>().text = npcData.dialogueOptions [i];
+				}
+			}
+
 
 		}
 	}
@@ -146,13 +149,15 @@ public class Interactions : MonoBehaviour
                 break;
             
             // Case 1 is a good response, gains acceptance
-		    case 1:
-			    player.Acceptance += npcData.acceptanceValue;
+		case 1:
+				player.Acceptance += npcData.acceptanceValue;
+				npcData.acceptanceValue = 0;
 			    break;
 
             // Case 2 is a bad response, lose acceptance
 		    case 2:
 			    player.Acceptance -= npcData.acceptanceValue;
+				npcData.acceptanceValue = 0;
 			    break;
 
             // Case 3 accepts a mission, sets missioninprogress to true, and sets the mission

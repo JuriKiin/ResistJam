@@ -31,7 +31,7 @@ public class Player : MonoBehaviour {
 
             Vector3 dist = npc.transform.position - transform.position;
 
-            if (dist.sqrMagnitude < interactionThreshold)   //If we are closer than sqrt(3) away, we can initiate an interaction
+			if (dist.sqrMagnitude < interactionThreshold)   //If we are closer than sqrt(3) away, we can initiate an interaction
             {
                 interactionManager.InitInteraction(npc);
                 canWalk = false;
