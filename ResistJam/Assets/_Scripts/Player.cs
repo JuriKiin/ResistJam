@@ -11,6 +11,7 @@ public class Player : MonoBehaviour {
 	public bool canWalk = true;
 	public float interactionThreshold = 4.5f;
 	public float Acceptance = 0.0f;
+	public bool inMission = false;
 
 	void Start()
 	{

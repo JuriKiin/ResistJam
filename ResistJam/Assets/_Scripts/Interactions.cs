@@ -58,9 +58,19 @@ public class Interactions : MonoBehaviour
 			nameText.text = npcData.characterName + ":";
 			greetingText.text = npcData.greeting;
 
-
+			if(player.inMission)
+			{
+				for (int i = 0; i < 3; i++)
+				{
+					if (npcData.responseValue [i] == 3) 
+					{
+						//Debug.Log ("PATRICK IS HERE");
+						npcData.followUpOptions [i] = "Sorry, you are currently helping somone else.";
+					}
+				}
+			}
             // If mission is completed or in-progress change the dialogue
-			if(npcData.missionInProgress || npcData.missionComplete)
+			else if(npcData.missionInProgress || npcData.missionComplete)
 			{
 
                 
@@ -147,8 +157,12 @@ public class Interactions : MonoBehaviour
 
             // Case 3 accepts a mission, sets missioninprogress to true, and sets the mission
 		    case 3:
-                Manager.GetComponent<Missions>().SetMissionDetails(npcData);    //Set mission details.
-                npcData.missionInProgress = true;
+			if(!player.inMission)
+			{
+				Manager.GetComponent<Missions>().SetMissionDetails(npcData);    //Set mission details.
+				npcData.missionInProgress = true;
+				player.inMission = true;
+			}
                 break;
 
             // Case 4 You have completed the NPC's task
@@ -171,6 +185,7 @@ public class Interactions : MonoBehaviour
 			if(npcData.hasCompleted)
 				{
 					npcData.missionComplete = true;
+					player.inMission = false;
 				}
 				else
 				{
