@@ -37,7 +37,25 @@ public class Missions : MonoBehaviour
 			break;
 
 		case MissionType.Talk:
-			break;
+                bool allTalkedTo = true;
+                for(int i = 0; i < currentNPC.talkableNPC.Count; i++)
+                {
+                    if(currentNPC.talkableNPC[i].talkedTo == false)
+                    {
+                        allTalkedTo = false;
+                        break;
+                    }
+                }
+                if (allTalkedTo)
+                {
+                    currentNPC.hasCompleted = true;
+                }
+
+                if (currentNPC.missionComplete)
+                {
+                    ResetMissionDetails();
+                }
+                break;
 
 		case MissionType.Fetch:
 
@@ -99,6 +117,16 @@ public class Missions : MonoBehaviour
             case MissionType.None:
                 break;
 
+            case MissionType.Talk:
+                //Makes all of the talkable people interactable
+                for(int i = 0; i < data.talkableNPC.Count; i++)
+                {
+                    data.talkableNPC[i].interactVar = true;
+                }
+                //Sets the mission type and text
+                currentMission = MissionType.Talk;
+                missionText.text = data.missionText;
+                break;
             case MissionType.Fetch:
                 // Set some variables to false to prevent issues
                 haveItem = false;

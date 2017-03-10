@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class NPC : MonoBehaviour
 {
@@ -37,6 +38,10 @@ public class NPC : MonoBehaviour
 
     public bool interactVar;
     public NPC secondaryNPC;
+
+    //Talking variables
+    public List<NPC> talkableNPC;
+    public bool talkedTo;
     GameObject player;
 
 
@@ -70,9 +75,7 @@ public class NPC : MonoBehaviour
 			greeting = endText;
 		}
 
-
-        
-
+       
 
 	}
 

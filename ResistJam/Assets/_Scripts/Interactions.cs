@@ -95,7 +95,6 @@ public class Interactions : MonoBehaviour
 				{
 					if (npcData.responseValue [i] == 3) 
 					{
-						//Debug.Log ("PATRICK IS HERE");
 						npcData.followUpOptions [i] = "Sorry, you are currently helping somone else.";
 					}
 				}
@@ -158,6 +157,10 @@ public class Interactions : MonoBehaviour
 		    case 2:
 			    player.Acceptance -= npcData.acceptanceValue;
 				npcData.acceptanceValue = 0;
+                if(player.Acceptance < 0)
+                {
+                    player.Acceptance = 0;
+                }
 			    break;
 
             // Case 3 accepts a mission, sets missioninprogress to true, and sets the mission
@@ -197,7 +200,12 @@ public class Interactions : MonoBehaviour
 					// Quest is not complete do nothing
 				}
 			break;
-
+            //Case 7 
+            //If the NPC is used to in a "talk" quest then disable their interactvar and set them to talkedTo true
+            case 7:
+                npcData.talkedTo = true;
+                npcData.interactVar = false;
+                break;
 
 
             default:

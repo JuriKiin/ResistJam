@@ -24,21 +24,22 @@ public class Player : MonoBehaviour {
 	{
 		Movement ();
 
-		if(Input.GetKeyUp(KeyCode.Space))	//try to interact with someone
-		{
-			GameObject npc = GetClosestNPC ();
+        if (Input.GetKeyUp(KeyCode.Space))  //try to interact with someone
+        {
+            GameObject npc = GetClosestNPC();
 
-
-            Vector3 dist = npc.transform.position - transform.position;
-
-			if (dist.sqrMagnitude < interactionThreshold)   //If we are closer than sqrt(3) away, we can initiate an interaction
+            if (npc.GetComponent<NPC>().interactVar)//Check to see if the NPC is allowed to have an interaction
             {
-                interactionManager.InitInteraction(npc);
-                canWalk = false;
-                rb.velocity = Vector3.zero;
+                Vector3 dist = npc.transform.position - transform.position;
+
+                if (dist.sqrMagnitude < interactionThreshold)   //If we are closer than sqrt(3) away, we can initiate an interaction
+                {
+                    interactionManager.InitInteraction(npc);
+                    canWalk = false;
+                    rb.velocity = Vector3.zero;
+                }
             }
-            
-		}
+        }
 
 	}
 
@@ -65,11 +66,8 @@ public class Player : MonoBehaviour {
 			if(dist.sqrMagnitude < distance)	//Square the magnitude of that vector, and if it's less than distance
 			{
 				distance = dist.sqrMagnitude;   //Set the new closest distance to the current distance
-
-                if (npc.GetComponent<NPC>().interactVar)//Check to see if the NPC is allowed to have an interaction
-                {
-                    closestNPC = npc;               //Set the closest NPC to this game object that we are testing.
-                }
+                closestNPC = npc;
+                
 			}
 		}
 		return closestNPC;	//Return this gameObject
