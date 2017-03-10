@@ -121,7 +121,9 @@ public class Missions : MonoBehaviour
                 //Makes all of the talkable people interactable
                 for(int i = 0; i < data.talkableNPC.Count; i++)
                 {
-                    data.talkableNPC[i].interactVar = true;
+                    data.talkableNPC[i].talkable = true;
+					data.talkableNPC [i].dialogueOptions [1] = data.talkableNPC [i].talkMissionText;
+					data.talkableNPC [i].followUpOptions [1] = data.talkableNPC [i].talkResponseText;
                 }
                 //Sets the mission type and text
                 currentMission = MissionType.Talk;

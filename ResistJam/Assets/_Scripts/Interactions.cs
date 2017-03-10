@@ -202,9 +202,13 @@ public class Interactions : MonoBehaviour
 			break;
             //Case 7 
             //If the NPC is used to in a "talk" quest then disable their interactvar and set them to talkedTo true
-            case 7:
-                npcData.talkedTo = true;
-                npcData.interactVar = false;
+		case 7:
+			if (npcData.talkable) {
+				npcData.talkedTo = true;
+				npcData.talkable = false;
+				npcData.dialogueOptions [1] = "";
+				npcData.followUpOptions [1] = "";
+			}
                 break;
 
 

@@ -40,8 +40,16 @@ public class NPC : MonoBehaviour
     public NPC secondaryNPC;
 
     //Talking variables
+	//List of NPC's to talk to
     public List<NPC> talkableNPC;
+	//Bool to check if the NPC has been talked to
     public bool talkedTo;
+	//Bool to allow the mission dialogue option
+	public bool talkable;
+	//Text to display during the mission
+	public string talkMissionText;
+	//Response mission text
+	public string talkResponseText;
     GameObject player;
 
 
