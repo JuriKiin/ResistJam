@@ -31,7 +31,8 @@ public class NPC : MonoBehaviour
 	public bool hasCompleted = false;
 	public bool missionComplete = false;
 
-	// Text that replaces the NPC's text when completing the mission
+    // Text that replaces the NPC's text when completing the mission
+    public string missionStartText;
     public string missionCompletedText;
     public string endText;
 
@@ -61,17 +62,26 @@ public class NPC : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+
+        // Saves the MissionStartText
+        for (int i = 0; i < 3; i++)
+        {
+            if (responseValue[i] == 3)
+            {
+                missionStartText = followUpOptions[i];
+            }
+        }
     }
 
 
     void Update()
 	{
         // Bool for Returning to NPC
-		if (missionComplete)
+        if (missionComplete)
         {
             greeting = missionCompletedText;
-        }
 
+        }
 
         // Bool for if you completed a mission: Sets mission to false and gives end text
         if (missionComplete)

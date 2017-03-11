@@ -99,9 +99,19 @@ public class Interactions : MonoBehaviour
 					}
 				}
 			}
+            else if (!player.inMission)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    if (npcData.responseValue[i] == 3)
+                    {
+                        npcData.followUpOptions[i] = npcData.missionStartText;
+                    }
+                }
+            }
 
             // Normal Text Dialogue
-			if(player.Acceptance < npcData.minAcceptance)
+            if (player.Acceptance < npcData.minAcceptance)
 			{
 				greetingText.text = "You are not accepted enough to talk to this person.";
 				for(int i=0;i<3;i++)
