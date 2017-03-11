@@ -11,6 +11,14 @@ public class Acceptance : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		thisImage.rectTransform.sizeDelta = new Vector2 (380f*(FindObjectOfType<Player>().Acceptance/100f),25f);	
+		if(FindObjectOfType<Player>().Acceptance < 100)
+		{
+			thisImage.rectTransform.sizeDelta = new Vector2 (392f*(FindObjectOfType<Player>().Acceptance/100f),25f);	
+		}
+		else
+		{
+			thisImage.rectTransform.sizeDelta = new Vector2 (392f,25f);
+		}
+
 	}
 }
