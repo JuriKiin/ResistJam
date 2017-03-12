@@ -4,14 +4,17 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class LoadScene : MonoBehaviour {
+public class ButtonMethods : MonoBehaviour {
 
 	public void LoadLevel(string levelName)
 	{
 		SceneManager.LoadScene (levelName);
 	}
-	void OnMouseOver()
+
+	public void KeepPlaying()
 	{
-		GetComponentInChildren<Text> ().color = Color.green;
+		FindObjectOfType<Player> ().keepPlaying = true;
+		FindObjectOfType<Player> ().gameOverPanel.SetActive (false);
+		FindObjectOfType<Player> ().canWalk = true;
 	}
 }
