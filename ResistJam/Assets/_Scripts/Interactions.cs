@@ -30,6 +30,7 @@ public class Interactions : MonoBehaviour
 			activeInteraction = false;
 			GetComponent<Player> ().canWalk = true;
 			interactionWindow.SetActive (false);
+			player.CheckAcceptance ();
 		}
 	}
 

@@ -13,6 +13,10 @@ public class Player : MonoBehaviour {
 	public float Acceptance = 0.0f;
 	public bool inMission = false;
 
+	public bool keepPlaying = false;
+	public GameObject gameOverPanel;
+
+
 	void Start()
 	{
 		rb = GetComponent<Rigidbody> ();
@@ -73,11 +77,18 @@ public class Player : MonoBehaviour {
 		return closestNPC;	//Return this gameObject
 	}
 		
-	void CheckAcceptance()	//Check to see if we have enough acceptance to win. This should only be called when we finish a task.
+	public void CheckAcceptance()	//Check to see if we have enough acceptance to win. This should only be called when we finish a task.
 	{
-		if(Acceptance >= 100.0)	//If we are at 100% we win
+		if(Acceptance >100f)
+		{
+			Acceptance = 100f;
+		}
+
+		if(Acceptance >= 100f && !keepPlaying)	//If we are at 100% we win
 		{
 			// game is over
+			gameOverPanel.SetActive(true);
+			canWalk = false;
 		}
 		else   //We continue playing
 		{
