@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/_Scene/About.unity
+- path: Assets/_Scene/ProgressScene.unity
   isLoaded: 1
   isActive: 1
