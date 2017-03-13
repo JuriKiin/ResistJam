@@ -1,0 +1,16 @@
+<linker>
+	<assembly fullname="Assembly-CSharp">
+		<type fullname="ButtonMethods">
+			<method name="LoadLevel"/>
+			<method name="LoadLevel"/>
+			<method name="KeepPlaying"/>
+			<method name="LoadLevel"/>
+			<method name="LoadLevel"/>
+		</type>
+		<type fullname="Interactions">
+			<method name="ChangeText"/>
+			<method name="ChangeText"/>
+			<method name="ChangeText"/>
+		</type>
+	</assembly>
+</linker>

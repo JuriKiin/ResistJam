@@ -13,11 +13,11 @@ public class Acceptance : MonoBehaviour {
 	{
 		if(FindObjectOfType<Player>().Acceptance < 100 && FindObjectOfType<Player>().Acceptance > 0)
 		{
-			thisImage.rectTransform.sizeDelta = new Vector2 (392f*(FindObjectOfType<Player>().Acceptance/100f),25f);	
+			thisImage.rectTransform.sizeDelta = new Vector2 (366f*(FindObjectOfType<Player>().Acceptance/100f),25f);	
 		}
 		else
 		{
-			thisImage.rectTransform.sizeDelta = new Vector2 (392f,25f);
+			thisImage.rectTransform.sizeDelta = new Vector2 (366f,25f);
 		}
 
 		if(FindObjectOfType<Player>().Acceptance <= 0)
